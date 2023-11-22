@@ -4,12 +4,16 @@
 </head>
 
 <body>
+  <button id="rock">Rock</button>
+  <button id="paper">Paper</button>
+  <button id="scissors">Scissosrs</button>
+
+  <div id="result"></div>
 
 </body>
 
 <script>
-
-let getComputerChoice = () => {
+function getComputerChoice() {
     let randomNumber = Math.floor(Math.random() * 3);
   switch (randomNumber) {
     case 0:
@@ -21,29 +25,65 @@ let getComputerChoice = () => {
   }
 }
 
-function playRound(playerSelection, computerSelection) {
-  let player = playerSelection.toLowerCase();
-  let computer = computerSelection.toLowerCase();
+const body = document.body;
+const roc = document.querySelector('#rock');
+const pap = document.querySelector('#paper');
+const scissor = document.querySelector('#scissors');
+const resu = document.querySelector('#result');
+let points = 0;
+let computerPoints = 0;
+
+function checkIfWin() {
+  const displayResult = document.createElement('p');
+  if (points === 5) {
+    displayResult.textContent = "Player wins!";
+    resu.appendChild(displayResult);
+  } else if (computerPoints === 5) {
+    displayResult.textContent = "Computer wins!";
+    resu.appendChild(displayResult);
+  }
+}
+
+function playRound(player, computer) {
+  // let player = playerSelection.toLowerCase();
+  // let computer = computerSelection.toLowerCase();
+  const runScore = document.createElement("p");
   if (
   (player === "rock" && computer === "scissors") || 
   (player === "scissors" && computer === "paper") ||
   (player === "paper" && computer === "rock")
   ) {
-    console.log("Player wins!")
+    points++;
+    runScore.textContent = 'Player has ' + points + " points";
+    resu.appendChild(runScore);
+    checkIfWin();
   } else {
-    console.log("Computer wins!")
+    computerPoints++;
+    runScore.textContent = 'Computer has ' + computerPoints + " points";
+    resu.appendChild(runScore);
+    checkIfWin();
   }
 }
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Rock, paper, or scissors?")
-        console.log(playRound(playerSelection, getComputerChoice()));
-    }
+roc.addEventListener('click', () => {
+  playRound('rock', getComputerChoice());
+});
+pap.addEventListener('click', () => {
+  playRound('paper', getComputerChoice());
+});
+scissor.addEventListener('click', () => {
+  playRound('scissors', getComputerChoice());
+});
 
-}
 
-game();
+// function game() {
+//     for (let i = 0; i < 5; i++) {
+//         //let playerSelection = prompt("Rock, paper, or scissors?")
+//         console.log(playRound(playerSelection, getComputerChoice()));
+//     }
+
+// }
+// game();
 
 </script>
 
